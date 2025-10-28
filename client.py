@@ -1,13 +1,13 @@
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
+# from azure.ai.inference import ChatCompletionsClient
+# from azure.ai.inference.models import SystemMessage, UserMessage
+# from azure.core.credentials import AzureKeyCredential
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
 import os
 
 server_params = StdioServerParameters(
     command="mcp",
-    params=["run","server.py"],
+    args=["run","server.py"],
     env=None
 )
 
@@ -72,14 +72,10 @@ async def run():
     async with stdio_client(server_params) as (read, write):
         async with ClientSession(read,write) as session:
             await session.initialize()
-            
-            # resources = await session.list_resources()
-            # for r in resources:
-            #     print(f"Resource {r.name}")
                 
             tools = await session.list_tools()
             for t in tools:
-                print(f"Resource {t.name}")
+                print(f"Resource {t}")
                 
             # content, mimetype = await session.read_resource("greeting://hello")
             # print(content, mimetype)
@@ -96,7 +92,6 @@ async def run():
             # for f in functions_to_call:
             #     result = await session.call_tool(f["name"], arguments=f["args"])
             #     print("TOOLS result: ", result.content)
-            
                 
 if __name__ == "__main__":
     import asyncio

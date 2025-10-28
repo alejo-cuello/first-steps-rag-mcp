@@ -7,8 +7,3 @@ mcp = FastMCP("Demo")
 def add(a: int, b:int) -> int:
     """Add two numbers"""
     return a+b
-
-# @mcp.resource(f"greeting://{name}")
-# def get_greeting(name: str) -> str:
-#     """Get a personalized greeting"""
-#     return f"Hello, {name}"
