@@ -3,6 +3,7 @@
 # from azure.core.credentials import AzureKeyCredential
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
+import asyncio
 import os
 
 server_params = StdioServerParameters(
@@ -75,13 +76,17 @@ async def run():
                 
             tools = await session.list_tools()
             for t in tools:
+                print(f"Tool {t}")
+            
+            tools = await session.list_resources()
+            for t in tools:
                 print(f"Resource {t}")
                 
-            # content, mimetype = await session.read_resource("greeting://hello")
-            # print(content, mimetype)
+            content, mimetype = await session.read_resource("greeting://alejo")
+            print(content, mimetype)
             
-            # result = await session.read_tool("add", arguments={"a":1, "b":7})
-            # print(result.content)
+            result = await session.call_tool("add", arguments={"a":1, "b":7})
+            print(result.content)
             
             # functions = []
             
@@ -94,6 +99,4 @@ async def run():
             #     print("TOOLS result: ", result.content)
                 
 if __name__ == "__main__":
-    import asyncio
-
     asyncio.run(run())
